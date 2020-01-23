@@ -7,27 +7,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Side
 {
 
 
-    private static Map<Integer,ImagesBefore> dict;
+    private static Map<Integer,Ememesy> dict;
     private Context context;
     private Random rand;
+    private Ememesy leftUp,leftDown,rightDown,rightUp;
+    private Thread thread;
+    private ExecutorService executor;
 
 
     public Side(Context context)
     {
         this.context=context;
-        dict = new TreeMap<Integer,ImagesBefore>();
-        rand = new Random();
+        dict = new TreeMap<Integer,Ememesy>();
         setConstans();
 
 
     }
 
-    public  Map<Integer,ImagesBefore> getDict()
+    public  Map<Integer,Ememesy> getDict()
     {
         return dict;
     }
@@ -35,39 +39,6 @@ public class Side
 
 
     public void setDict(int index) {
-
-        //Class leftUp[] = { Red.class, Blue.class,Brown.class,Green.class,Yellow.class,Orange.class};
-
-
-        ImagesBefore leftUp[] = {new Red(0,1000,1,-2,context),
-                new Blue(0,1000,1,-2,context),
-                new Green(0,1000,1,-2,context),
-                new Brown(0,1000,1,-2,context),
-                new Orange(0,1000,1,-2,context),
-                new Yellow(0,1000,1,-2,context)};
-
-
-        ImagesBefore leftDown[] = {new Red(0,1500,1,-2,context),
-                new Blue(0,1500,1,-2,context),
-                new Green(0,1500,1,-2,context),
-                new Brown(0,1500,1,-2,context),
-                new Orange(0,1500,1,-2,context),
-                new Yellow(0,1500,1,-2,context)};
-
-
-        ImagesBefore rightUp[] = {new Red(1000,1000,-1,-2,context),
-                new Blue(1000,1000,-1,-2,context),
-                new Green(1000,1000,-1,-2,context),
-                new Brown(1000,1000,-1,-2,context),
-                new Orange(1000,1000,-1,-2,context),
-                new Yellow(1000,1000,-1,-2,context)};
-
-        ImagesBefore rightDown[] = {new Red(1000,1500,-1,-2,context),
-                new Blue(1000,1500,-1,-2,context),
-                new Green(1000,1500,-1,-2,context),
-                new Brown(1000,1500,-1,-2,context),
-                new Orange(1000,1500,-1,-2,context),
-                new Yellow(1000,1500,-1,-2,context)};
 
         switch(index)
         {
@@ -77,42 +48,29 @@ public class Side
 
               /*  try {
                     dict.put(index, (ImagesBefore) leftUp[rand.nextInt(6)].getConstructor(Integer.class,Integer.class,Integer.class,Integer.class,Context.class).newInstance(0,1000,1,-2,context));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-               */
 
-                dict.put(index,leftUp[rand.nextInt(6)]);
-                dict.get(index).startThread();
+               */
+                leftUp.newImage(-150,1500);
                 break;
             }
 
             case 1:
             {
-                dict.put(index,leftDown[rand.nextInt(6)]);
-                dict.get(index).startThread();
+                leftDown.newImage(-150,1000);
 
 
                 break;
             }
             case 2:
             {
-                dict.put(index,rightUp[rand.nextInt(6)]);
-                dict.get(index).startThread();
+                rightUp.newImage(1100,1500);
 
 
                 break;
             }
             case 3:
             {
-                dict.put(index,rightDown[rand.nextInt(6)]);
-                dict.get(index).startThread();
+                rightDown.newImage(1100,1000);
 
 
                 break;
@@ -124,54 +82,38 @@ public class Side
 
     private void setConstans()
     {
-        ImagesBefore leftUp[] = {new Red(0,1000,1,-2,context),
-                new Blue(0,1000,1,-2,context),
-                new Green(0,1000,1,-2,context),
-                new Brown(0,1000,1,-2,context),
-                new Orange(0,1000,1,-2,context),
-                new Yellow(0,1000,1,-2,context)};
 
-        ImagesBefore leftDown[] = {new Red(0,1500,1,-2,context),
-                new Blue(0,1500,1,-2,context),
-                new Green(0,1500,1,-2,context),
-                new Brown(0,1500,1,-2,context),
-                new Orange(0,1500,1,-2,context),
-                new Yellow(0,1500,1,-2,context)};
+        rightDown = new Ememesy(1100,1000,-1,-2,context);
+        leftUp = new Ememesy(-50,1500,1,-2,context);
+        leftDown = new Ememesy(-50,1000,1,-2,context);
+        rightUp = new Ememesy(1100,1500,-1,-2,context);
+
+        dict.put(0,leftUp);
+        dict.put(1,leftDown);
+        dict.put(2,rightUp);
+        dict.put(3,rightDown);
 
 
-        ImagesBefore rightUp[] = {new Red(1000,1000,-1,-2,context),
-                new Blue(1000,1000,-1,-2,context),
-                new Green(1000,1000,-1,-2,context),
-                new Brown(1000,1000,-1,-2,context),
-                new Orange(1000,1000,-1,-2,context),
-                new Yellow(1000,1000,-1,-2,context)};
+         executor = Executors.newFixedThreadPool(4);
 
-        ImagesBefore rightDown[] = {new Red(1000,1500,-1,-2,context),
-                new Blue(1000,1500,-1,-2,context),
-                new Green(1000,1500,-1,-2,context),
-                new Brown(1000,1500,-1,-2,context),
-                new Orange(1000,1500,-1,-2,context),
-                new Yellow(1000,1500,-1,-2,context)};
-
-
-        dict.put(0,leftUp[rand.nextInt(6)]);
-        dict.put(1,leftDown[rand.nextInt(6)]);
-        dict.put(2,rightUp[rand.nextInt(6)]);
-        dict.put(3,rightDown[rand.nextInt(6)]);
-
-        for(int i = 0; i<4;i++)
-        {
-            dict.get(i).startThread();
+            Runnable emesmes = rightDown.new MyThread();
+            executor.execute(emesmes);
+            Runnable emesmes1 = leftUp.new MyThread();
+            executor.execute(emesmes1);
+            Runnable emesmes2 = leftDown.new MyThread();
+            executor.execute(emesmes2);
+            Runnable emesmes3 = rightUp.new MyThread();
+            executor.execute(emesmes3);
         }
 
 
-
-
-
-
+        public ExecutorService getExecutor()
+        {
+            return executor;
+        }
 
 
 
     }
 
-}
+

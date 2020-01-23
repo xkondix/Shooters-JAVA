@@ -3,6 +3,7 @@ package com.example.shooters;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -29,6 +30,16 @@ public class Main2Activity extends AppCompatActivity {
     {
         finish();
         System.exit(0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            exit();
+        }
+        return true;
     }
 
 }

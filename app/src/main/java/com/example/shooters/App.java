@@ -17,10 +17,11 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     private Main2Activity main2Activity=null;
-    private ArrayList<Red> list;
     private Side side;
     private Paint paint;
     private int pkt,hp;
+    private int dictI;
+    private double dx,dy;
 
 
 
@@ -103,15 +104,15 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
 
         for(int i = 0; i<4;i++)
         {
-            if (side.getDict().get(i).getEx() == false) {
-                canvas.drawBitmap(side.getDict().get(i).getObject(), (int) side.getDict().get(i).myGetX(), (int) side.getDict().get(i).myGetY(), null);
-            }
+            canvas.drawBitmap(side.getDict().get(i).getObject(), (int) side.getDict().get(i).myGetX(), (int) side.getDict().get(i).myGetY(), null);
+
         }
 
         if(!getHp())
         {
             canvas.drawRGB(255, 255, 255);
             canvas.drawText("GAME OVER: " + pkt, getWidth()/2, getHeight(), paint);
+            side.getExecutor().shutdown();
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
@@ -121,6 +122,13 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
         }
 
 
+    }
+
+
+
+    public void endGame()
+    {
+        side.getExecutor().shutdown();
 
     }
 
@@ -144,10 +152,12 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
                     if (x >= side.getDict().get(i).myGetX() && x < (side.getDict().get(i).myGetX()  + side.getDict().get(i).getObject().getWidth())
                             && y >= side.getDict().get(i).myGetY() && y < (side.getDict().get(i).myGetY() + side.getDict().get(i).getObject().getHeight())) {
 
-                        side.getDict().get(i).hit();
-                        side.getDict().get(i).setEx();
-                        pkt+=side.getDict().get(i).getPkt();
-                        side.setDict(i);
+
+                                //side.getDict().get(i).hit();
+                                pkt += side.getDict().get(i).getPkt();
+                                side.setDict(i);
+
+
 
 
 
