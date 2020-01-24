@@ -20,8 +20,8 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
     private Side side;
     private Paint paint;
     private int pkt,hp;
-    private int dictI;
-    private double dx,dy;
+
+
 
 
 
@@ -108,18 +108,7 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        if(!getHp())
-        {
-            canvas.drawRGB(255, 255, 255);
-            canvas.drawText("GAME OVER: " + pkt, getWidth()/2, getHeight(), paint);
-            side.getExecutor().shutdown();
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            main2Activity.exit();
-        }
+
 
 
     }
@@ -128,7 +117,15 @@ public class App extends SurfaceView implements SurfaceHolder.Callback {
 
     public void endGame()
     {
+
         side.getExecutor().shutdown();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread.setRunning(false);
+        main2Activity.exit();
 
     }
 

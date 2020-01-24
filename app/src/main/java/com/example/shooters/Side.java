@@ -16,9 +16,7 @@ public class Side
 
     private static Map<Integer,Ememesy> dict;
     private Context context;
-    private Random rand;
     private Ememesy leftUp,leftDown,rightDown,rightUp;
-    private Thread thread;
     private ExecutorService executor;
 
 

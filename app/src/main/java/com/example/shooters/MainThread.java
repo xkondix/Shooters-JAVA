@@ -46,11 +46,11 @@ public class MainThread extends Thread
                         }
                     }
 
-                    if(!app.getHp())
-                    {
-                        this.app.draw(canvas);
-                        running=false;
+
+                    if(!app.getHp()) {
+                        app.endGame();
                     }
+
 
 
 

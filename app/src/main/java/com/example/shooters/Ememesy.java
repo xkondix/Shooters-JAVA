@@ -12,7 +12,7 @@ public class Ememesy
 
     private double x,y,dx,dy;
     private int sleep,number,pkt;
-    private Bitmap emes;
+    private Bitmap emes, b;
     private Context c;
 
 
@@ -39,7 +39,7 @@ public class Ememesy
         {
             case 0:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e1);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e1);
                 this.pkt=1;
                 this.sleep=15;
                 break;
@@ -47,7 +47,7 @@ public class Ememesy
 
             case 1:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e2);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e2);
                 this.pkt=2;
                 this.sleep=10;
                 break;
@@ -55,7 +55,7 @@ public class Ememesy
 
             case 2:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e3);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e3);
                 this.pkt=3;
                 this.sleep=8;
                 break;
@@ -63,7 +63,7 @@ public class Ememesy
 
             case 3:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e4);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e4);
                 this.pkt=4;
                 this.sleep=6;
                 break;
@@ -71,7 +71,7 @@ public class Ememesy
 
             case 4:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e5);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e5);
                 this.pkt=5;
                 this.sleep=3;
                 break;
@@ -80,14 +80,14 @@ public class Ememesy
 
             case 5:
             {
-                this.emes = BitmapFactory.decodeResource(c.getResources(), R.drawable.e6);
+                b = BitmapFactory.decodeResource(c.getResources(), R.drawable.e6);
                 this.pkt=6;
                 this.sleep=1;
                 break;
             }
         }
 
-        this.emes = Bitmap.createScaledBitmap(this.emes,
+        this.emes = Bitmap.createScaledBitmap(b,
                 200, 200, false);
     }
 
@@ -132,7 +132,7 @@ public class Ememesy
 
     public boolean miss()
     {
-        if(myGetY() < -150)
+        if(myGetY() < -250)
         {
             return true;
         }
